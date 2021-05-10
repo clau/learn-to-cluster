@@ -66,7 +66,7 @@ def bmm(feat,
         verbose=False):
     import torch
     _, cols = dist.shape
-    batch_sim = torch.zeros((eid - sid, cols), dtype=torch.float32)
+    batch_sim = torch.zeros((eid - sid, cols), dtype=torch.float64)
     for s in tqdm(range(sid, eid, process_unit),
                   desc='bmm',
                   disable=not verbose):

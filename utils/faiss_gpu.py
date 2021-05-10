@@ -83,7 +83,7 @@ class faiss_index_wrapper():
 
 def batch_search(index, query, k, bs, verbose=False):
     n = len(query)
-    dists = np.zeros((n, k), dtype=np.float32)
+    dists = np.zeros((n, k), dtype=np.float64)
     nbrs = np.zeros((n, k), dtype=np.int64)
 
     for sid in tqdm(range(0, n, bs),

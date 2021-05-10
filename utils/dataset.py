@@ -15,7 +15,7 @@ class BasicDataset():
                  normalize=True,
                  verbose=True):
         self.name = name
-        self.dtype = np.float32
+        self.dtype = np.float64
         self.dim = dim
         self.normalize = normalize
         if not os.path.exists(prefix):

@@ -178,7 +178,7 @@ class GCNEDataset(object):
         # present `direction`
         feat = self.features[nbr] - self.features[i]
         adj = self.adj[nbr, :][:, nbr]
-        adj = row_normalize(adj).toarray().astype(np.float32)
+        adj = row_normalize(adj).toarray().astype(np.float64)
 
         if not self.ignore_label:
             lb = [int(self.idx2lb[i] == self.idx2lb[n]) for n in nbr]

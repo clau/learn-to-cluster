@@ -25,7 +25,7 @@ def build_symmetric_adj(adj, self_loop=True):
 
 
 def sparse_mx_to_indices_values(sparse_mx):
-    sparse_mx = sparse_mx.tocoo().astype(np.float32)
+    sparse_mx = sparse_mx.tocoo().astype(np.float64)
     indices = np.vstack((sparse_mx.row, sparse_mx.col)).astype(np.int64)
     values = sparse_mx.data
     shape = np.array(sparse_mx.shape)
