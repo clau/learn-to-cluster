@@ -13,7 +13,7 @@ def density(dists, radius=0.3, use_weight=True):
 
     num, _ = dists.shape
     if use_weight:
-        density = np.zeros((num, ), dtype=np.float64)
+        density = np.zeros((num, ), dtype=np.float32)
         for r, c in zip(row, col):
             density[r] += 1 - dists[r, c]
     else:
@@ -27,7 +27,7 @@ def s_nbr(dists, nbrs, idx2lb, **kwargs):
     ''' use supervised confidence defined on neigborhood
     '''
     num, _ = dists.shape
-    conf = np.zeros((num, ), dtype=np.float64)
+    conf = np.zeros((num, ), dtype=np.float32)
     contain_neg = 0
     for i, (nbr, dist) in enumerate(zip(nbrs, dists)):
         lb = idx2lb[i]
@@ -49,7 +49,7 @@ def s_nbr_size_norm(dists, nbrs, idx2lb, **kwargs):
     ''' use supervised confidence defined on neigborhood (norm by size)
     '''
     num, _ = dists.shape
-    conf = np.zeros((num, ), dtype=np.float64)
+    conf = np.zeros((num, ), dtype=np.float32)
     contain_neg = 0
     max_size = 0
     for i, (nbr, dist) in enumerate(zip(nbrs, dists)):
@@ -76,7 +76,7 @@ def s_avg(feats, idx2lb, lb2idxs, **kwargs):
     ''' use average similarity of intra-nodes
     '''
     num = len(idx2lb)
-    conf = np.zeros((num, ), dtype=np.float64)
+    conf = np.zeros((num, ), dtype=np.float32)
     for i in range(num):
         lb = idx2lb[i]
         idxs = lb2idxs[lb]
@@ -95,7 +95,7 @@ def s_center(feats, idx2lb, lb2idxs, **kwargs):
     ''' use average similarity of intra-nodes
     '''
     num = len(idx2lb)
-    conf = np.zeros((num, ), dtype=np.float64)
+    conf = np.zeros((num, ), dtype=np.float32)
     for i in range(num):
         lb = idx2lb[i]
         idxs = lb2idxs[lb]

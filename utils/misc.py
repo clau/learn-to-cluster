@@ -68,7 +68,7 @@ def aggregate(features, adj, times):
     return features.astype(dtype)
 
 
-def read_probs(path, inst_num, feat_dim, dtype=np.float64, verbose=False):
+def read_probs(path, inst_num, feat_dim, dtype=np.float32, verbose=False):
     assert (inst_num > 0 or inst_num == -1) and feat_dim > 0
     count = -1
     if inst_num > 0:
@@ -159,7 +159,7 @@ def dump2json(ofn, data, force=False):
             return int(obj)
         elif isinstance(obj, np.int64):
             return int(obj)
-        elif isinstance(obj, np.float64):
+        elif isinstance(obj, np.float32):
             return float(obj)
         elif isinstance(obj, set) or isinstance(obj, np.ndarray):
             return list(obj)

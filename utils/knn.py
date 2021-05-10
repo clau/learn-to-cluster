@@ -263,14 +263,14 @@ class knn_brute_force(knn):
     def __init__(self, feats, k, index_path='', verbose=True):
         self.verbose = verbose
         with Timer('[brute force] build index', verbose):
-            feats = feats.astype('float64')
+            feats = feats.astype('float32')
             sim = feats.dot(feats.T)
         with Timer('[brute force] query topk {}'.format(k), verbose):
             nbrs = np.argpartition(-sim, kth=k)[:, :k]
             idxs = np.array([i for i in range(nbrs.shape[0])])
             dists = 1 - sim[idxs.reshape(-1, 1), nbrs]
             self.knns = [(np.array(nbr, dtype=np.int32),
-                          np.array(dist, dtype=np.float64))
+                          np.array(dist, dtype=np.float32))
                          for nbr, dist in zip(nbrs, dists)]
 
 
@@ -334,7 +334,7 @@ class knn_faiss(knn):
                 print('[faiss] read index from {}'.format(index_path))
                 index = faiss.read_index(index_path)
             else:
-                feats = feats.astype('float64')
+                feats = feats.astype('float32')
                 size, dim = feats.shape
                 index = faiss.IndexFlatIP(dim)
                 if index_key != '':
@@ -367,7 +367,7 @@ class knn_faiss(knn):
             else:
                 sims, nbrs = index.search(feats, k=k)
                 self.knns = [(np.array(nbr, dtype=np.int32),
-                              1 - np.array(sim, dtype=np.float64))
+                              1 - np.array(sim, dtype=np.float32))
                              for nbr, sim in zip(nbrs, sims)]
 
 
@@ -398,7 +398,7 @@ class knn_faiss_gpu(knn):
                                                verbose=False)
 
                 self.knns = [(np.array(nbr, dtype=np.int32),
-                              np.array(dist, dtype=np.float64))
+                              np.array(dist, dtype=np.float32))
                              for nbr, dist in zip(nbrs, dists)]
 
 
@@ -410,7 +410,7 @@ if __name__ == '__main__':
     nfeat = 10000
     np.random.seed(42)
 
-    feats = np.random.random((nfeat, d)).astype('float64')
+    feats = np.random.random((nfeat, d)).astype('float32')
     feats = l2norm(feats)
 
     index1 = knn_hnsw(feats, k)

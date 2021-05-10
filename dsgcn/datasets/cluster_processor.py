@@ -4,7 +4,7 @@ import numpy as np
 class ClusterProcessor(object):
     def __init__(self, dataset):
         self.dataset = dataset
-        self.dtype = np.float64
+        self.dtype = np.float32
 
     def __len__(self):
         return self.dataset.size
