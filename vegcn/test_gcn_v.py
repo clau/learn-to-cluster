@@ -31,7 +31,8 @@ def test(model, dataset, cfg, logger):
         model.cuda()
         features = features.cuda()
         adj = adj.cuda()
-        labels = labels.cuda()
+        if not dataset.ignore_label:
+            labels = labels.cuda()
 
     model.eval()
     output, gcn_feat = model((features, adj), output_feat=True)
