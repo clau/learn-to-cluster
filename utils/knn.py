@@ -179,7 +179,7 @@ def build_knns(knn_prefix,
                feats,
                knn_method,
                k,
-               num_process=None,
+               num_process=8,
                is_rebuild=False,
                feat_create_time=None):
     knn_prefix = os.path.join(knn_prefix, '{}_k_{}'.format(knn_method, k))
