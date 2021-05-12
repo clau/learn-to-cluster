@@ -4,7 +4,8 @@ import os.path as osp
 prefix = './data'
 train_name = 'part0_train'
 test_name = 'part1_test'
-knn = 80
+# knn = 80
+knn = 30
 knn_method = 'faiss'
 th_sim = 0.  # cut edges with similarity smaller than th_sim
 
@@ -23,8 +24,8 @@ train_data = dict(feat_path=osp.join(prefix, 'features',
 
 test_data = dict(feat_path=osp.join(prefix, 'features',
                                     '{}.bin'.format(test_name)),
-                 label_path=osp.join(prefix, 'labels',
-                                     '{}.meta'.format(test_name)),
+#                  label_path=osp.join(prefix, 'labels',
+#                                      '{}.meta'.format(test_name)),
                  knn_graph_path=osp.join(prefix, 'knns', test_name,
                                          '{}_k_{}.npz'.format(knn_method,
                                                               knn)),
@@ -41,7 +42,8 @@ model = dict(type='gcn_v',
 optimizer = dict(type='SGD', lr=0.1, momentum=0.9, weight_decay=1e-5)
 optimizer_config = {}
 
-total_epochs = 80000
+# total_epochs = 80000
+total_epochs = 30000
 lr_config = dict(
     policy='step',
     step = [int(r * total_epochs) for r in [0.5, 0.8, 0.9]]
@@ -53,8 +55,10 @@ workflow = [('train_gcnv', 1)]
 # testing args
 use_gcn_feat = True
 max_conn = 1
-tau_0 = 0.65
-tau = 0.8
+# tau_0 = 0.65
+# tau = 0.8
+tau_0 = 0.8
+tau = 0.85
 
 metrics = ['pairwise', 'bcubed', 'nmi']
 
@@ -63,7 +67,9 @@ workers_per_gpu = 1
 
 checkpoint_config = dict(interval=5000)
 
-log_level = 'INFO'
+log_level = 'CRITICAL'
 log_config = dict(interval=1, hooks=[
     dict(type='TextLoggerHook'),
 ])
+
+
