@@ -34,10 +34,11 @@ class DistributedSampler(_DistributedSampler):
 
 class DistributedSequentialSampler(Sampler):
     def __init__(self, dataset, world_size, rank):
+        data_size = len(dataset)
         assert rank >= 0
-        assert dataset.size >= world_size, '{} vs {}'.format(
-            dataset.size, world_size)
-        sub_num = int(math.ceil(1. * dataset.size / world_size))
+        assert data_size >= world_size, '{} vs {}'.format(
+            data_size, world_size)
+        sub_num = int(math.ceil(1. * data_size / world_size))
         # add extra samples to make it evenly divisible
         tot_num = sub_num * world_size
         self.beg = sub_num * rank
